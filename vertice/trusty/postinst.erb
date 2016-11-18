@@ -1,8 +1,8 @@
 #!/bin/bash
 
-mkdir -p <%= @basic[:libhome] %>/<%= @package[:package] %>
+mkdir -p <%= @basic[:libhome] %>/vertice
 
-cp <%= @basic[:home] %>/<%= @package[:package] %>/conf/<%= @package[:package] %>.conf <%= @basic[:libhome] %>/<%= @package[:package] %>/<%= @package[:package] %>.conf
+cp <%= @basic[:home] %>/vertice/conf/vertice.conf <%= @basic[:libhome] %>/vertice/vertice.conf
 
 cat >> <%= @basic[:libhome] %>/env.sh << EOF
 initctl set-env MEGAM_HOME='<%= @basic[:libhome] %>'
@@ -13,4 +13,4 @@ chmod 0755 <%= @basic[:libhome] %>/env.sh
 
 initctl reload-configuration
 
-service <%= @package[:package] %> start || echo "<%= @package[:package] %> could not be started. Try manually with service <%= @package[:package] %> start"
+start <%= @package[:package] %>  || echo "<%= @package[:package] %> could not be started. Try manually with service <%= @package[:package] %> start"

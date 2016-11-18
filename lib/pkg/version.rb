@@ -21,14 +21,14 @@ module Pkg
         ## STEP 1: Configure directories
         # change the name to your own downstream fork.
         # eg:
-        # HOME    = "/usr/share/detio"
-        # LIBHOME = "/var/lib/detio"
-        # LOGHOME = "/var/log/detio"
-        # RUNHOME = "/var/run/detio"
-        HOME     = "/usr/share/megam"
-        LIBHOME  = "/var/lib/megam"
-        LOGHOME  = "/var/log/megam"
-        RUNHOME  = "/var/run/megam"
+         HOME    = "/usr/share/detio"
+         LIBHOME = "/var/lib/detio"
+         LOGHOME = "/var/log/detio"
+         RUNHOME = "/var/run/detio"
+     #   HOME     = "/usr/share/megam"
+     #   LIBHOME  = "/var/lib/megam"
+      #  LOGHOME  = "/var/log/megam"
+       # RUNHOME  = "/var/run/megam"
 
         # STEP 2: Configure basic fields used across the packager
         # change the name to your own downstream fork.
@@ -37,9 +37,9 @@ module Pkg
         # product: VirtEngine
         # product_prefix: virtengine
         BASIC = {
-            origin:         "megam",
-            product:        "MegamVertice".freeze,
-            product_prefix: "vertice".freeze,
+            origin:         "virtengine",
+            product:        "VirtEngine".freeze,
+            product_prefix: "virtengine".freeze,
             version:        "1.5".freeze,
             iteration:      "4".freeze,
             license:        "MIT".freeze,
@@ -47,9 +47,9 @@ module Pkg
             libhome:        "#{LIBHOME}",
             loghome:        "#{LOGHOME}",
             runhome:        "#{RUNHOME}",
-            vendor:         "Megam Systems".freeze,
-            maintainer:     "Megam Humans <humans@megam.io>".freeze,
-            url:            "https://docs.megam.io".freeze
+            vendor:         "DET.io".freeze,
+            maintainer:     "VirtEngine Humans <hello@virtengine.com>".freeze,
+            url:            "https://docs.virtengine.com".freeze
         }
 
         # *OPTIONAL*

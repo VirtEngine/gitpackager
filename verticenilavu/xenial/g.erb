@@ -6,7 +6,7 @@ cp -r .<%= @basic[:home] %>/nilavu ./var/www
 
 mv ./var/www/nilavu  ./var/www/<%= @package[:package] %>
 
-cd var/www/verticenilavu
+cd var/www/<%= @package[:package] %>
 
 cp -R ../../../../../base ./
 

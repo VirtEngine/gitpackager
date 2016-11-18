@@ -37,7 +37,7 @@ module Pkg
         end
 
         def golang
-          unless is_there?("go -v")
+          unless is_there?("go version")
               puts "   ✘ golang not installed"
           end
         end

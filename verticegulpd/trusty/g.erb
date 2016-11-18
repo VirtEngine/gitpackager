@@ -2,7 +2,7 @@
 
 mkdir -p .<%= @basic[:home]+"/"+@package[:package]+"/bin" %>
 
-cd <%= "verticegulpd/src/"+@package[:git_org]+"/gulp" %>
+cd <%= @package[:package]+"/src/"+@package[:git_org]+"/gulp" %>
 
 # sometimes  the dependencies aren't getting pulled. Adding a master solved the problem.
 git remote add master https://github.com/megamsys/gulp.git

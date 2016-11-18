@@ -19,7 +19,7 @@ EOF
 
 cp VERSION ../../../../../<%= @basic[:home]+"/"+@package[:package] %>
 
-mv  ./etc/systemd/system/vertice ./etc/systemd/system/<%= @package[:systemd_service] %>
+#mv  ./etc/systemd/system/<%= @package[:package] %> ./etc/systemd/system/<%= @package[:systemd_service] %>
 
 cd ../../../../../
 

@@ -8,8 +8,10 @@ wget -r -c -O nsqd.tar.gz <%= @package[:tar] %>
 
 tar -xvf nsqd.tar.gz -C .<%= @basic[:home]+"/"+@package[:package] %>/ --strip-components=1 && rm nsqd.tar.gz
 
-cp ./etc/systemd/system/nsqlookupd .<%= @basic[:home]+"/"+@package[:package] %>/
-cp ./etc/systemd/system/nsqadmin .<%= @basic[:home]+"/"+@package[:package] %>/
+cp /etc/systemd/system/<%= @package[:systemd_service] %> /etc/service/unicorn/
+
+mv /etc/service/unicorn/<%= @package[:systemd_service] %> /etc/service/unicorn/run
+
 rm ./etc/systemd/system/*.erb
 
 fpm -s dir -t rpm -f  --iteration <%= @basic[:iteration] %> -v <%= @basic[:version] %> \

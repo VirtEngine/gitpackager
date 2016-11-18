@@ -77,9 +77,9 @@ chmod 755 /etc/runit/3.d/02-unicorn
 
 mkdir -p /etc/service/unicorn
 mkdir -p /etc/service/nginx
-cp /etc/init.d/<%= @package[:package] %> /etc/service/unicorn/
-mv /etc/service/<% @package[:upstart_service] %>/<%= @package[:package] %> /etc/service/<% @package[:upstart_service] %>/run
-chmod 755 /etc/service/<% @package[:upstart_service] %>/run
+cp /etc/init/<%= @package[:upstart_service] %>.conf /etc/service/unicorn/
+mv /etc/service/<%= @package[:upstart_service] %>/<%= @package[:upstart_service] %>.conf /etc/service/<%= @package[:upstart_service] %>/run
+chmod 755 /etc/service/<%= @package[:upstart_service] %>/run
 
 cat > /etc/service/nginx/run <<EOF
 #!/bin/sh
@@ -91,7 +91,7 @@ chmod 755 /etc/service/nginx/run
 gem install bundler
 
 
-cd /var/www/<% @package[:package] %>/
+cd /var/www/<%= @package[:package] %>/
 
 mkdir -p tmp/pids
 

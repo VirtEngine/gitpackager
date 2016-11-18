@@ -8,7 +8,6 @@ chmod 755 cadvisor
 
 cp cadvisor .<%= @basic[:home]+"/"+@package[:package]+"/bin" %>
 
-mv ./etc/systemd/system/cadvisor ./etc/systemd/system/<%= @package[:systemd_service] %>
 
 
 fpm -s dir -t rpm  -f  --iteration <%= @basic[:iteration] %> -v <%= @basic[:version] %> \

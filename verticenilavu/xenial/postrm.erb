@@ -10,7 +10,7 @@
 
 [ -d /etc/runit ] && rm -rf /etc/runit
 
-[ -d /etc/service/<% @package[:upstart_service] %> ] && rm -rf /etc/service/<% @package[:upstart_service] %>
+[ -d /etc/service/<%= @package[:upstart_service] %> ] && rm -rf /etc/service/<%= @package[:upstart_service] %>
 
 [ -d /etc/service/nginx ] && rm -rf /etc/service/nginx
 

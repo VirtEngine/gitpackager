@@ -1,52 +1,46 @@
-cd ../../../../gulp/src/github.com/megamsys/gulp
-
-cd ../../../../../
-
-=-------------------
-
 #!/bin/bash
 
-<%= @package_dir = @basic[:home]/@package[:package] %>
+mkdir -p .<%= @basic[:home]+"/"+@package[:package]+"/bin" %>
 
-<%= @package_bin_dir = @package_dir/bin  %>
-
-mkdir -p .<%= @package_bin_dir %>
-
-cd <%= @package_dir/src/@package[:git_org]/gulp %>
+cd <%= @package[:package]+"/src/"+@package[:git_org]+"/gulp" %>
 
 # sometimes  the dependencies aren't getting pulled. Adding a master solved the problem.
 git remote add master https://github.com/megamsys/gulp.git
 
 make build
 
-cp -rf ./conf/ ../../../../../<%= @package_dir %>
+cp -rf ./conf/ ../../../../..<%= @basic[:home]+"/"+@package[:package] %>
 
 mv  gulpd <%=@package[:package] %>
 
-cp <%=@package[:package] %> ../../../../../<%= @package_bin_dir %>
+cp <%=@package[:package] %> ../../../../..<%= @basic[:home]+"/"+@package[:package]+"/bin" %>
 
 cat > VERSION << EOF
 git_version=`git rev-parse HEAD`
 git_branch="1.5"
 EOF
 
-cp VERSION ../../../../../<%= @package_dir %>
+cp VERSION ../../../../../<%= @basic[:home]+"/"+@package[:package] %>
 
 cd ../../../../../usr/share/megam/<%= @package[:package] %>
 
-tar -zcvpf <%= @package[:package] %>.tar.gz bin conf VERSION
+<% unless @package[:skip_upload] %>
+  tar -zcvpf <%= @package[:package] %>.tar.gz bin conf VERSION
 
-# md5sum <%= @package[:package] %>.tar.gz > <%= @package[:package] %>.tar.gz.md5
-# s3cmd put --acl-public --guess-mime-type <%= @package[:package] %>.tar.gz.md5 s3://vertice/testing/1.5/<%= @package[:package] %>.tar.gz.md5
-# s3cmd put --acl-public --guess-mime-type <%= @package[:package] %>.tar.gz s3://vertice/testing/1.5/<%= @package[:package] %>.tar.gz
-# s3cmd put --acl-public --guess-mime-type VERSION s3://vertice/testing/1.5/VERSION
+  md5sum <%= @package[:package] %>.tar.gz > <%= @package[:package] %>.tar.gz.md5
+
+  s3cmd put --acl-public --guess-mime-type <%= @package[:package] %>.tar.gz.md5 s3://vertice/testing/1.5/<%= @package[:package] %>.tar.gz.md5
+  s3cmd put --acl-public --guess-mime-type <%= @package[:package] %>.tar.gz s3://vertice/testing/1.5/<%= @package[:package] %>.tar.gz
+  s3cmd put --acl-public --guess-mime-type VERSION s3://vertice/testing/1.5/VERSION
+<% end %>
 
 cd ../../../../
 
-fpm -s dir -t rpm  -f  --iteration <%= @basic[:iteration] %> -v <%= @basic[:version] %> \
+fpm -s dir -t deb  -f  --iteration <%= @basic[:iteration] %> -v <%= @basic[:version] %> \
 -n <%= @package[:package] %> -d "<%= @package[:dependencies] %>" \
 --before-install ./preinst --after-install ./postinst  \
 --after-remove ./prerm  --after-remove ./postrm  \
---rpm-init ./etc/init/<%= @package[:systemd_service] %> \
+--deb-systemd ./etc/systemd/system/<%= @package[:systemd_service] %> \
 --license "<%= @basic[:license] %>" --vendor "<%= @basic[:vendor] %>" --category "<%= @package[:category] %>" \
---maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  .<%= @package_dir %>
+--maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  .<%= @basic[:home]+"/"+@package[:package] %>
+

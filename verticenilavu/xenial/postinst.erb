@@ -77,8 +77,8 @@ chmod 755 /etc/runit/3.d/02-unicorn
 
 mkdir -p /etc/service/unicorn
 mkdir -p /etc/service/nginx
-cp /etc/init.d/<%= @package[:package] %>.service /etc/service/unicorn/
-mv /etc/service/unicorn/<%= @package[:package] %>.service /etc/service/unicorn/run
+cp /etc/systemd/system/<%= @package[:systemd_service] %> /etc/service/unicorn/
+mv /etc/service/unicorn/<%= @package[:systemd_service] %> /etc/service/unicorn/run
 chmod 755 /etc/service/unicorn/run
 
 cat > /etc/service/nginx/run <<EOF

@@ -49,7 +49,7 @@ module Pkg::Data
 
             dependencies: "#{Pkg::Version::COMMON}",
 
-            git: 'https://github.com/megamsys/vertice_gateway',
+            git: 'https://github.com/VirtEngine/gateway',
             branch: '1.5',
 
             #The service name to start
