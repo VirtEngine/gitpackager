@@ -25,27 +25,27 @@ module Pkg
 
         private
 
-        def make
-            puts "=> 1. Transform: erb - #{@distro_dir} #{@distro_build_dir} ".colorize(:green).bold
-            Rake::FileList[@distro_dir + "/**"].each do |f|
+        def make(ls_dir = @distro_dir)
+            puts "=> 1. Transform: erb - #{ls_dir} #{@distro_build_dir} ".colorize(:green).bold
+            Rake::FileList[ls_dir + "/**"].each do |f|
             if File.file?(f)
                 @scripter = Scripter.new(Pkg::Version::BASIC, @package,IO.read(f))
                 @scripter.save(File.join("#{distro_build_dir}",File.basename(f, '.erb')))
             else
-                FileUtils.cp_r f,"#{@distro_build_dir}"
-                if @distro_dir == "trusty"
-                  Rake::FileList["#{distro_build_dir}"+"/etc/init/**"].each do |f|
-                  @scripter = Scripter.new(Pkg::Version::BASIC, @package,IO.read(f))
-                  @scripter.save(File.join("#{distro_build_dir}"+"/etc/init/",File.basename(f, '.erb')))
+               if @distro_dir == "trusty"
+                  Pkg::Util::File.mkdir_p("#{distro_build_dir}"+"/etc/init/")
+                  Rake::FileList["#{f}/init/**"].each do |d|
+                    @scripter = Scripter.new(Pkg::Version::BASIC, @package,IO.read(d))
+                    @scripter.save(File.join("#{distro_build_dir}"+"/etc/init/",File.basename(d, '.erb')))
                   end
                 else
-                  Rake::FileList["#{distro_build_dir}"+"/etc/systemd/system/**"].each do |f|
-                    @scripter = Scripter.new(Pkg::Version::BASIC, @package,IO.read(f))
-                    @scripter.save(File.join("#{distro_build_dir}"+"/etc/systemd/system/",File.basename(f, '.erb')))
+                  Pkg::Util::File.mkdir_p("#{distro_build_dir}"+"/etc/systemd/system/")
+                  Rake::FileList["#{f}/systemd/system/**"].each do |d|
+                    @scripter = Scripter.new(Pkg::Version::BASIC, @package,IO.read(d))
+                    @scripter.save(File.join("#{distro_build_dir}"+"/etc/systemd/system/",File.basename(d, '.erb')))
                   end
               end
           end
-
 
             end if File.exists?(@distro_dir)
             Dir.chdir @distro_build_dir

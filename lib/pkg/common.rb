@@ -9,7 +9,7 @@ module Pkg
         ### The build directory
         BUILD  = "build"
 
-
+        
         # set the ditro and the distro build directory if its the supported os.
         def self.distro(os)
             @os = os

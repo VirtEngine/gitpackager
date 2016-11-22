@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'colorize'
+require 'pathname'
 
 module Pkg::Util::File
 
@@ -100,12 +101,16 @@ module Pkg::Util::File
           if Pkg::Util::File.empty_dir?(file)
             FileUtils.mkpath(File.join(workdir, file), :verbose => false)
           else
-            FileUtils.mkpath(File.dirname(File.join(workdir, file)), :verbose => false)
-            FileUtils.cp(file, File.join(workdir, file), :verbose => false, :preserve => true)
+            ship_path = File.join(Pkg::Config.packaging_repo,
+                                  Pkg::Config.git_release,
+                                  Pathname.new(file).relative_path_from(Pathname.new(file).dirname.parent))
+
+            FileUtils.mkpath(File.dirname(File.join(workdir, ship_path)), :verbose => false)
+            FileUtils.cp(file, File.join(workdir, ship_path), :verbose => false, :preserve => true)
           end
+          puts "   ✔ shipping #{File.join(workdir, ship_path)}".colorize(:blue)
         end
       end
-#####      Pkg::Util::Version.versionbump(workdir) if Pkg::Config.update_version_file
     end
   end
 end

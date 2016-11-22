@@ -1,10 +1,13 @@
 module Pkg::Params
+
     BUILD_PARAMS = [:distro,
         :name,
-        :packagin_repo,
+        :project_root,
+        :packaging_repo,
         :packaging_release,
-        :git_release,
         :packaging_iteration,
+        :git_release,
+        :ship_root,
     :gpg_key]
 
     def self.ARGVS

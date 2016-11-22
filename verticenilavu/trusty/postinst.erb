@@ -101,4 +101,9 @@ export MEGAM_HOME=<%= @basic[:libhome] %>
 
 RAILS_ENV=production bundle exec rake assets:precompile
 
+mv /var/www/<%= @package[:package] %>/public/assets/social/github-d4fa1d2891690d6c2802dd0b87191b0802ec66682f1b79af9015454273191b6f.png /var/www/<%= @package[:package] %>/public/assets/social/github.png
+mv /var/www/<%= @package[:package] %>/public/assets/social/google_oauth2-980984f58fd9f55d85813f2d5aa0a0ad9c14025a28dc81798c0cfa089956606f.png /var/www/<%= @package[:package] %>/public/assets/social/google_oauth2.png
+mv /var/www/<%= @package[:package] %>/public/assets/social/facebook-87cce93a6298f19d284ad0d9c888ff7006294b9510668411de32ae68ee67bbf6.png /var/www/<%= @package[:package] %>/public/assets/social/facebook.png
+
+
 echo "sv start unicorn and sv start nginx"

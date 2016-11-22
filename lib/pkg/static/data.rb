@@ -53,8 +53,8 @@ module Pkg::Data
             branch: '1.5',
 
             #The service name to start
-            systemd_service: ' #{BASIC[:product].service',
-            upstart_service: ' #{BASIC[:product]'
+            systemd_service: "#{GATEWAY}.service",
+            upstart_service: "#{GATEWAY}"
         }
     end
 

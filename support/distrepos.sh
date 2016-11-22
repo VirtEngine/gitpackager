@@ -105,7 +105,7 @@ PACKAGE_ROUTE_DIR="$root/repo/$distro_dir"
 
 REPO_ROUTE_DIR="$repo_dir/$distro_dir"
 
-BUILD_dir="$repo_dir/$distro_dir"
+BUILD_dir="$repo_dir/$build"
 }
 
 conf() {

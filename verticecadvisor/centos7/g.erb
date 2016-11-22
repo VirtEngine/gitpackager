@@ -8,8 +8,6 @@ chmod 755 cadvisor
 
 cp cadvisor .<%= @basic[:home]+"/"+@package[:package]+"/bin" %>
 
-
-
 fpm -s dir -t rpm  -f  --iteration <%= @basic[:iteration] %> -v <%= @basic[:version] %> \
 -n <%= @package[:package] %> -d "<%= @package[:dependencies] %>" \
 --before-install ./preinst --after-install ./postinst  \

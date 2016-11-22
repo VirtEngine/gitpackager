@@ -7,7 +7,6 @@ module Pkg
         ## check if the following build tools are installed
         ## 1.5 [git, ruby, golang, npm, sbt]
         ## 2.0 [git, ruby, golang, npm, cargo]
-
         def check?
             git
             ruby
@@ -37,7 +36,7 @@ module Pkg
         end
 
         def golang
-          unless is_there?("go version")
+          unless is_there?("go version > /dev/null")
               puts "   ✘ golang not installed"
           end
         end

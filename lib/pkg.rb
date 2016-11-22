@@ -18,10 +18,12 @@ module Pkg
   require 'pkg/static/data'
   require 'pkg/utils'
   require 'pkg/scripter'
+  require 'pkg/yaml_builder'
+  require 'pkg/shipper'
   require 'pkg/tools'
 
   # Load configuration defaults
+  Pkg::YamlBuilder.new.save
   Pkg::Config.load_defaults
   Pkg::Config.load_default_configs
-#  Pkg::Config.load_args
 end

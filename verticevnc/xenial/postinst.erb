@@ -10,11 +10,5 @@ tar xvzf node-v* && cd node-v*
 rm -rf /usr/bin/node
 cp bin/node /usr/bin/node
 
-cat >> /var/lib/megam/env.sh << EOF
-MEGAM_HOME='/var/lib/megam/'
-EOF
-
-chmod 0755 /var/lib/megam/env.sh
-
 systemctl enable verticevnc.service
 systemctl start verticevnc.service
