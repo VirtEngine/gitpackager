@@ -95,7 +95,7 @@ cd /var/www/<%= @package[:package] %>/
 mkdir -p tmp/pids
 bundle install --deployment --without test --without development
 
-export MEGAM_HOME=/var/lib/megam
+export MEGAM_HOME=<%= @basic[:libhome] %>
 
 RAILS_ENV=production bundle exec rake assets:precompile
 
