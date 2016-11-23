@@ -17,13 +17,11 @@ EOF
 
 cd ../../..
 
-mv ./etc/systemd/system/<%= @package[:package] %>.service ./etc/systemd/system/<%= @package[:systemd_service] %>
 
  fpm -s dir -t deb  -f  --iteration <%= @basic[:iteration] %> -v <%= @basic[:version] %> \
  -n <%= @package[:package] %> -d "<%= @package[:deb_dependencies] %>" \
  --before-upgrade ./preupgrd --after-upgrade ./postupgrd \
  --before-install ./preinst --after-install ./postinst  \
  --after-remove ./prerm  --after-remove ./postrm  \
- --deb-systemd ./etc/systemd/system/<%= @package[:systemd_service] %> \
  --license "<%= @basic[:license] %>" --vendor "<%= @basic[:vendor] %>" --category "<%= @package[:category] %>" \
  --maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  ./var/www/<%= @package[:package] %>

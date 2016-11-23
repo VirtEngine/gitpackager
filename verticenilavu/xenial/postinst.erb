@@ -77,8 +77,20 @@ chmod 755 /etc/runit/3.d/02-unicorn
 
 mkdir -p /etc/service/unicorn
 mkdir -p /etc/service/nginx
-cp /lib/systemd/system/<%= @package[:systemd_service] %> /etc/service/unicorn/
-mv /etc/service/unicorn/<%= @package[:systemd_service] %> /etc/service/unicorn/run
+
+cat > /etc/service/unicorn/run <<EOF
+#!/bin/bash
+
+exec 2>&1
+
+cd  /var/www/<%= @package[:package] %>
+
+export MEGAM_HOME=<%= @basic[:libhome] %>
+export RAILS_ENV=production
+
+LD_PRELOAD=/usr/lib/libjemalloc.so.1 exec bundle exec config/unicorn_launcher -E production -c config/unicorn.conf.rb
+EOF
+
 chmod 755 /etc/service/unicorn/run
 
 cat > /etc/service/nginx/run <<EOF
