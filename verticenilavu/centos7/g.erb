@@ -1,6 +1,12 @@
 #!/bin/sh
 
-cd var/www/verticenilavu
+mkdir -p ./var/www
+
+cp -r .<%= @basic[:home] %>/nilavu ./var/www
+
+mv ./var/www/nilavu  ./var/www/<%= @package[:package] %>
+
+cd var/www/<%= @package[:package] %>
 
 cp -R ../../../../../base ./
 
@@ -11,10 +17,13 @@ EOF
 
 cd ../../..
 
-fpm -s dir -t rpm -p "$MEGAM_HOME" -f --iteration $3 -n $1 -v $2 -d "verticecommon, git-core, curl,  rake, zlib1g-dev, build-essential, ruby2.3, ruby2.3-dev, libssl-dev, libreadline-dev, libyaml-dev, libsqlite3-dev, sqlite3, nginx-common, nginx-core, nginx, autoconf, libpcre3, libpcre3-dev,libxml2-dev, libxslt1-dev, libcurl4-openssl-dev,libltdl-dev, libtool, python-software-properties, monit,nodejs, npm, runit,socat,language-pack-en, cron, anacron, psmisc, gawk, parallel,git, wget, rsyslog, whois, wbritish, wamerican" --before-upgrade ./preupgrd --after-upgrade ./postupgrd --before-install ./preinst --after-install ./postinst --before-remove ./prerm --deb-init ./etc/systemd/system/verticenilavu.service --license "Apache V2" --vendor "Megam Systems" --category "infrastructure" --maintainer "Megam Maintainer info@megam.io" --url " http://docs.megam.io/docs/vertice" --description "The userinterface using Ruby on Rails which provides the one click launcher for
- Megam Vertice. This is connected to the Vertice gateway (API server) only
- .
- This provides a marketplace, ability to manage storage like S3 utilizing ceph storage, launch
- application, vms, containers (docker), stream logs and monitor and bill them.
- .
- This package contains an awesome userinterface based on Ruby on Rails for Megam Vertice." ./var/www/verticenilavu
+mv ./etc/systemd/system/<%= @package[:package] %>.service ./etc/systemd/system/<%= @package[:systemd_service] %>
+
+ fpm -s dir -t rpm -f --iteration <%= @basic[:iteration] %> -v <%= @basic[:version] %> \
+ -n <%= @package[:package] %> -d "<%= @package[:rpm_dependencies] %>" \
+ --before-upgrade ./preupgrd --after-upgrade ./postupgrd \
+ --before-install ./preinst --after-install ./postinst  \
+ --after-remove ./prerm  --after-remove ./postrm  \
+ --rpm-init ./etc/systemd/system/<%= @package[:systemd_service] %> \
+ --license "<%= @basic[:license] %>" --vendor "<%= @basic[:vendor] %>" --category "<%= @package[:category] %>" \
+ --maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  ./var/www/<%= @package[:package] %>

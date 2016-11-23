@@ -2,7 +2,7 @@
 
 mkdir -p <%= @basic[:libhome] %>/<%= @package[:package] %>
 
-cp <%= @basic[:home] %>/<%= @package[:package] %>/conf/<%= @package[:package] %>.conf <%= @basic[:libhome] %>/<%= @package[:package] %>/<%= @package[:package] %>.conf
+cp <%= @basic[:home] %>/<%= @package[:package] %>/conf/vertice.conf <%= @basic[:libhome] %>/vertice/vertice.conf
 
 cat >> <%= @basic[:libhome] %>/env.sh << EOF
 MEGAM_HOME='<%= @basic[:libhome] %>'

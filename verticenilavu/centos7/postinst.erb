@@ -1,24 +1,15 @@
 #!/bin/sh
 
-mkdir -p /var/log/megam/verticenilavu
-
-
-## Symbolic link to ruby2.3 to default /usr/bin/ruby
-rm /usr/bin/ruby
-rm /usr/bin/gem
-
-ln -s /usr/bin/ruby2.3 /usr/bin/ruby
-ln -s /usr/bin/gem2.3 /usr/bin/gem
+mkdir -p <%= @basic[:loghome]+"/"+@package[:package] %>
 
 ## runit preparation
 cd /
 mkdir -p /etc/runit/1.d
 rm -f /etc/apt/apt.conf.d/40proxy
-locale-gen en_US
 npm install uglify-js -g
 npm install svgo -g
 
-cd /var/www/verticenilavu/base
+cd /var/www/<%= @package[:package] %>/base
 mkdir -p /etc/runit/3.d
 mv runit-1 /etc/runit/1
 mv runit-1.d-cleanup-pids /etc/runit/1.d/cleanup-pids
@@ -45,19 +36,19 @@ mv lib/libjemalloc.so.1 /usr/lib
 cd / && rm -rf /jemalloc
 
 ###Install nginx
-cd /var/www/verticenilavu/base
+cd /var/www/<%= @package[:package] %>/base
 chmod 755 install-nginx
 ./install-nginx
 mv install-nginx /tmp/install-nginx
 
 ###letsencrypt
-mv letsencrypt  /var/www/verticenilavu/bin
-chmod 755 /var/www/verticenilavu/bin/letsencrypt
+mv letsencrypt  /var/www/<%= @package[:package] %>/bin
+chmod 755 /var/www/<%= @package[:package] %>/bin/letsencrypt
 ##copy config file
-cp /var/www/verticenilavu/config/nilavu.conf /var/lib/megam/nilavu.conf
-cp /var/www/verticenilavu/config/site_settings.yml /var/lib/megam/site_settings.yml
-cp /var/www/verticenilavu/config/regions.yml /var/lib/megam/regions.yml
-cp /var/www/verticenilavu/config/nginx.conf /etc/nginx/conf.d/
+cp /var/www/<%= @package[:package] %>/config/nilavu.conf <%= @basic[:libhome] %>/nilavu.conf
+cp /var/www/<%= @package[:package] %>/config/site_settings.yml <%= @basic[:libhome] %>/site_settings.yml
+cp /var/www/<%= @package[:package] %>/config/regions.yml <%= @basic[:libhome] %>/regions.yml
+cp /var/www/<%= @package[:package] %>/config/nginx.conf /etc/nginx/conf.d/
 mv /etc/nginx/conf.d/nginx.conf /etc/nginx/conf.d/nilavu.conf
 mkdir -p /var/nginx/cache
 
@@ -77,9 +68,11 @@ chmod 755 /etc/runit/3.d/02-unicorn
 
 mkdir -p /etc/service/unicorn
 mkdir -p /etc/service/nginx
-cp /etc/init.d/verticenilavu.service /etc/service/unicorn/
-mv /etc/service/unicorn/verticenilavu.service /etc/service/unicorn/run
+cp /etc/rc.d/init.d/<%= @package[:systemd_service] %> /etc/service/unicorn/
+mv /etc/service/unicorn/<%= @package[:systemd_service] %> /etc/service/unicorn/run
 chmod 755 /etc/service/unicorn/run
+mkdir -p /var/service
+ln -s /etc/service/unicorn /var/service
 
 cat > /etc/service/nginx/run <<EOF
 #!/bin/sh
@@ -90,14 +83,15 @@ chmod 755 /etc/service/nginx/run
 
 gem install bundler
 
+gem install rake
 
-cd /var/www/verticenilavu/
+cd /var/www/<%= @package[:package] %>/
 
 mkdir -p tmp/pids
 
 bundle install --deployment --without test --without development
 
-export MEGAM_HOME=/var/lib/megam
+export MEGAM_HOME=<%= @basic[:libhome] %>
 
 RAILS_ENV=production bundle exec rake assets:precompile
 

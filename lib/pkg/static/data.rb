@@ -25,7 +25,7 @@ module Pkg::Data
             category: 'cloud',
 
             deb_dependencies: "#{Pkg::Version::COMMON}, git-core, curl,  rake, zlib1g-dev, build-essential, ruby2.3, ruby2.3-dev, libssl-dev, libreadline-dev, libyaml-dev, libsqlite3-dev, sqlite3, nginx-common, nginx-core, nginx, autoconf, libpcre3, libpcre3-dev,libxml2-dev, libxslt1-dev, libcurl4-openssl-dev,libltdl-dev, libtool, python-software-properties, monit,nodejs, npm, runit,socat,language-pack-en, cron, anacron, psmisc, gawk, parallel,git, wget, rsyslog, whois, wbritish, wamerican",
-            rpm_dependencies: "#{Pkg::Version::COMMON}",
+            rpm_dependencies: "#{Pkg::Version::COMMON},verticecommon, git-core, curl, epel-release, nginx, openssl-devel, sqlite-devel,  sqlite, autoconf, pcre-devel, pcre,libxml2,libxslt-devel,libtool-ltdl-devel, libtool, monit, nodejs, npm, gcc-c++, libstdc++-devel, socat, anacron, psmisc, gawk, parallel, git, wget, rsyslog, whois, glibc-common, libyaml",
 
             git: 'https://gitlab.com/megamsys/nilavu.git',
           #  git_org:
