@@ -1,0 +1,10 @@
+#!/bin/bash
+
+exec 2>&1
+
+cd  /var/www/<%= @package[:package] %>
+
+export MEGAM_HOME=<%= @basic[:libhome] %>
+export RAILS_ENV=production
+
+LD_PRELOAD=/usr/lib/libjemalloc.so.1 exec bundle exec config/unicorn_launcher -E production -c config/unicorn.conf.rb
