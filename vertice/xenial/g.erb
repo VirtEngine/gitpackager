@@ -1,23 +1,28 @@
 #!/bin/bash
 
-mkdir -p .<%= @basic[:home]+"/vertice"+"/bin" %>
+mkdir -p <%= "."+@basic[:home]+"/"+@package[:package]+"/bin"%>
 
-cd <%= @package[:package]+"/src/"+@package[:git_org]+"/vertice" %>
+mv <%= @package[:package]+"/src/"+@package[:git_org]+"/vertice" %> <%= @package[:package]+"/src/"+@package[:git_org]+"/"+@package[:package] %>
+
+cd <%= @package[:package]+"/src/"+@package[:git_org]+"/"+@package[:package] %>
+
 
 # sometimes  the dependencies aren't getting pulled. Adding a master solved the problem.
 git remote add master https://github.com/indykish/vertice.git
 make build
 
-cp -rf ./conf/ ../../../../../<%= @basic[:home]+"/vertice" %>
+cp -rf ./conf/ ../../../../..<%= @basic[:home]+"/"+@package[:package] %>
 
-cp vertice ../../../../../<%= @basic[:home]+"/vertice/bin" %>
+mv vertice <%= @package[:package] %>
+
+cp <%= @package[:package] %> ../../../../..<%= @basic[:home]+"/"+@package[:package]+"/bin" %>
 
 cat > VERSION << EOF
 git_version=`git rev-parse HEAD`
 git_branch="1.5"
 EOF
 
-cp VERSION ../../../../../<%= @basic[:home]+"/vertice" %>
+cp VERSION ../../../../..<%= @basic[:home]+"/"+@package[:package] %>
 
 cd ../../../../../
 
@@ -27,4 +32,4 @@ fpm -s dir -t deb  -f  --iteration <%= @basic[:iteration] %> -v <%= @basic[:vers
 --after-remove ./prerm  --after-remove ./postrm  \
 --deb-systemd ./etc/systemd/system/<%= @package[:systemd_service] %> \
 --license "<%= @basic[:license] %>" --vendor "<%= @basic[:vendor] %>" --category "<%= @package[:category] %>" \
---maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  .<%= @basic[:home]+"/vertice" %>
+--maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  .<%= @basic[:home]+"/"+@package[:package] %>

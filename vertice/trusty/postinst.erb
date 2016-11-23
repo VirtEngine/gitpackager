@@ -2,7 +2,7 @@
 
 mkdir -p <%= @basic[:libhome] %>/vertice
 
-cp <%= @basic[:home] %>/vertice/conf/vertice.conf <%= @basic[:libhome] %>/vertice/vertice.conf
+cp <%= @basic[:home] %>/<%= @package[:package] %>/conf/vertice.conf <%= @basic[:libhome] %>/vertice/vertice.conf
 
 cat >> <%= @basic[:libhome] %>/env.sh << EOF
 initctl set-env MEGAM_HOME='<%= @basic[:libhome] %>'

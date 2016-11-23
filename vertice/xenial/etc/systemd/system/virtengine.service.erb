@@ -7,5 +7,5 @@ After=runlevel4.target
 After=runlevel5.target
 [Service]
 EnvironmentFile=<%= @basic[:libhome] %>/env.sh
-ExecStart=<%= @basic[:home] %>/vertice/bin/vertice -v start
+ExecStart=<%= @basic[:home] %>/<%= @package[:package] %>/bin/<%= @package[:package] %> -v start
 KillMode=process
