@@ -1,7 +1,11 @@
 #!/bin/bash
-mkdir -p .<%= @basic[:home]+"/"+@package[:package]+"/bin" %>
 
-cd <%= @package[:package]+"/src/"+@package[:git_org]+"/vertice" %>
+mkdir -p <%= "."+@basic[:home]+"/"+@package[:package]+"/bin"%>
+
+mv <%= @package[:package]+"/src/"+@package[:git_org]+"/vertice" %> <%= @package[:package]+"/src/"+@package[:git_org]+"/"+@package[:package] %>
+
+cd <%= @package[:package]+"/src/"+@package[:git_org]+"/"+@package[:package] %>
+
 
 # sometimes  the dependencies aren't getting pulled. Adding a master solved the problem.
 git remote add master https://github.com/indykish/vertice.git
@@ -9,7 +13,9 @@ make build
 
 cp -rf ./conf/ ../../../../..<%= @basic[:home]+"/"+@package[:package] %>
 
-cp <%=@package[:package] %> ../../../../..<%= @basic[:home]+"/"+@package[:package]+"/bin" %>
+mv vertice <%= @package[:package] %>
+
+cp <%= @package[:package] %> ../../../../..<%= @basic[:home]+"/"+@package[:package]+"/bin" %>
 
 cat > VERSION << EOF
 git_version=`git rev-parse HEAD`
@@ -17,7 +23,6 @@ git_branch="1.5"
 EOF
 
 cp VERSION ../../../../..<%= @basic[:home]+"/"+@package[:package] %>
-
 #mv  ./etc/systemd/system/vertice ./etc/systemd/system/<%= @package[:systemd_service] %>
 cd ../../../../../
 

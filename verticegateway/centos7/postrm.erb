@@ -1,0 +1,18 @@
+#!/bin/sh
+
+if [ -d "<%= @basic[:home] %>/<%= @package[:package] %>" ]; then
+  rm -r <%= @basic[:home] %>/<%= @package[:pacakge] %>
+fi
+
+if [ -d "<%= @basic[:libhome] %>/<%= @package[:package] %>" ]; then
+  rm -r <%= @basic[:libhome] %>/<%= @package[:pacakge] %>
+fi
+
+if [ -d "<%= @basic[:loghome] %>/<%= @package[:package] %>" ]; then
+  rm -r <%= @basic[:loghome] %>/<%= @package[:package] %>
+fi
+
+if [ -d "<%= @basic[:runhome] %>/<%= @package[:package] %>" ]; then
+  rm -r <%= @basic[:runhome] %>/<%= @package[:package] %>
+fi
+

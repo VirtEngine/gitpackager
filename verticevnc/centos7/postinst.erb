@@ -1,8 +1,8 @@
 #!/bin/bash
 
-mkdir -p <%= @basic[:libhome]+"/"+@package[:package]
+mkdir -p <%= @basic[:libhome]+"/"+@package[:package]  %>
 
-cd <%= @basic[:libhome]
+cd <%= @basic[:libhome] %>
 
  wget http://nodejs.org/dist/v0.10.30/node-v0.10.30.tar.gz
  tar xzvf node-v*
@@ -14,13 +14,13 @@ cd <%= @basic[:libhome]
 rm -rf usr/bin/node
 cp /usr/local/bin/node /usr/bin/node
 
-mv /etc/rc.d/init.d/verticevnc.service /etc/systemd/system/
+mv /etc/rc.d/init.d/virtenginevnc.service /etc/systemd/system/
 
-cat >> <%= @basic[:libhome] %>/env.sh << EOF
-MEGAM_HOME='/var/lib/megam/'
-EOF
+#cat >> /var/lib/megam/env.sh << EOF
+#MEGAM_HOME='/var/lib/megam/'
+#EOF
 
-chmod 0755 <%= @basic[:home] %>/env.sh
+#chmod 0755 <%= @basic[:home] %>/env.sh
 
-systemctl enable verticevnc.service
-systemctl start verticevnc.service
+systemctl enable virtenginevnc.service
+systemctl start  virtenginevnc.service

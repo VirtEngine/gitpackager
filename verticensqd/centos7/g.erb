@@ -6,9 +6,8 @@ wget -r -c -O nsqd.tar.gz <%= @package[:tar] %>
 
 tar -xvf nsqd.tar.gz -C .<%= @basic[:home]+"/"+@package[:package] %>/ --strip-components=1 && rm nsqd.tar.gz
 
-cp ./etc/systemd/system/<%= systemd_nsqlookupd_service %> .<%= @basic[:home]+"/"+@package[:package] %>/
-cp ./etc/systemd/system/<%= systemd_nsqadmin_service %> .<%= @basic[:home]+"/"+@package[:package] %>/
-rm ./etc/systemd/system/*.erb
+cp ./etc/systemd/system/<%= @package[:systemd_nsqlookupd_service] %> .<%= @basic[:home]+"/"+@package[:package] %>/
+cp ./etc/systemd/system/<%= @package[:systemd_nsqadmin_service] %> .<%= @basic[:home]+"/"+@package[:package] %>/
 
 fpm -s dir -t rpm -f  --iteration <%= @basic[:iteration] %> -v <%= @basic[:version] %> \
 -n <%= @package[:package] %>  \

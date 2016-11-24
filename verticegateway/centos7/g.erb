@@ -1,18 +1,34 @@
 #!/bin/sh
 
-mv .<%= @basic[:home] %>/vertice_gateway .<%= @basic[:home] %>/<%= @package[:package] %>
+mv .<%= @basic[:home] %>/gateway .<%= @basic[:home] %>/<%= @package[:package] %>
 cd .<%= @basic[:home] %>/<%= @package[:package] %>
 
-cat > VERSION <<EOF
+sbt clean
+sbt compile
+sbt dist
+
+cd ./target/universal/
+
+mv <%= @package[:package] %>-1.5.5.zip ../../..
+cd ../../..
+rm -rf <%= @package[:package] %>
+unzip <%= @package[:package] %>-1.5.5.zip
+mv <%= @package[:package] %>-1.5.5 <%= @package[:package] %>
+cd ./<%= @package[:package] %>
+rm -rf share
+
+cat > VERSION << EOF
 git_version=`git rev-parse HEAD`
-git_branch=1.5
+git_branch="1.5"
 EOF
 
-cp VERSION conf
-cp db/base.cql conf
+cd ../../../..
 
-sbt clean
-sbt dist:clean
-sbt compile
-sbt stage
-sbt rpm:packageBin
+fpm -s dir -t rpm -f --iteration <%= @basic[:iteration] %> -v <%= @basic[:version] %> \
+-n <%= @package[:package] %> -d "<%= @package[:dependencies] %>" \
+--before-install ./preinst --after-install ./postinst  \
+--after-remove ./prerm  --after-remove ./postrm  \
+--rpm-init ./etc/systemd/system/<%= @package[:systemd_service] %> \
+--license "<%= @basic[:license] %>" --vendor "<%= @basic[:vendor] %>" --category "<%= @package[:category] %>" \
+--maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  .<%= @basic[:home]+"/"+@package[:package] %>
+

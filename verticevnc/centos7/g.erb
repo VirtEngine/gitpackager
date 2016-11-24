@@ -12,6 +12,6 @@ fpm -s dir -t rpm  -f  --iteration <%= @basic[:iteration] %> -v <%= @basic[:vers
 -n <%= @package[:package] %> -d "gcc, gcc-c++, libpng12, libpng-devel, libpng12.so.0" \
 --before-install ./preinst --after-install ./postinst  \
 --after-remove ./prerm  --after-remove ./postrm  \
---deb-systemd ./etc/systemd/system/<%= @package[:systemd_service] %> \
+--rpm-init ./etc/systemd/system/<%= @package[:systemd_service] %> \
 --license "<%= @basic[:license] %>" --vendor "<%= @basic[:vendor] %>" --category "<%= @package[:category] %>" \
 --maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  .<%= @basic[:home]+"/"+@package[:package] %>

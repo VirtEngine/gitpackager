@@ -1,0 +1,12 @@
+#!/bin/bash
+
+mkdir -p <%= @basic[:libhome] %>/<%= @package[:package] %>
+
+export MEGAM_HOME=<%= @basic[:libhome] %>
+
+cp <%= @basic[:home] %>/<%= @package[:package] %>/conf/gateway.conf <%= @basic[:libhome] %>/<%= @package[:package] %>/
+#cp <%= @basic[:home] %>/<%= @package[:package] %>/conf/base.cql <%= @basic[:libhome] %>/<%= @package[:package] %>/
+cp <%= @basic[:home] %>/<%= @package[:package] %>/conf/logger.xml <%= @basic[:libhome] %>/<%= @package[:package] %>/
+
+cp /etc/rc.d/init.d/<%= @package[:systemd_service] %> /etc/systemd/system/
+

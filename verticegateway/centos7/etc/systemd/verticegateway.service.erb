@@ -1,0 +1,12 @@
+## Systemd script that starts <%= @package[:package] %>
+[Unit]
+Description=<%= @package[:package] %>
+After=network.target
+After=runlevel2.target
+After=runlevel3.target
+After=runlevel4.target
+After=runlevel5.target
+[Service]
+ExecStart=<%= @basic[:home] %>/<%= @package[:package] %>/bin/<%= @package[:package] %> -Dlogger.file=<%= @basic[:libhome] %>/<%= @package[:package] %>/logger.xml -Dconfig.file=<%= @basic[:libhome] %>/<%= @package[:package] %>/gateway.conf
+KillMode=mixed
+

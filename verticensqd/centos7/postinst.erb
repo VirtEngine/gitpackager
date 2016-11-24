@@ -11,8 +11,8 @@ done < /proc/net/route
 
 mkdir -p <%= @basic[:libhome] %>/<%= @package[:package] %>
 
-mv <%= @basic[:home] %>/<%= @package[:package] %>/nsqlookupd /etc/systemd/system/<%= @package[:systemd_nsqlookupd_service] %>
-mv <%= @basic[:home] %>/<%= @package[:package] %>/nsqadmin  /etc/systemd/system/<%= @package[:systemd_nsqadmin_service] %>
+mv <%= @basic[:home] %>/<%= @package[:package] %>/<%= @package[:systemd_nsqlookupd_service] %> /etc/systemd/system/<%= @package[:systemd_nsqlookupd_service] %>
+mv <%= @basic[:home] %>/<%= @package[:package] %>/<%= @package[:systemd_nsqadmin_service] %>  /etc/systemd/system/<%= @package[:systemd_nsqadmin_service] %>
 
 chmod 755 /etc/systemd/system/nsqlookupd.service
 chmod 755 /etc/systemd/system/nsqadmin.service
