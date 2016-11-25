@@ -6,6 +6,5 @@ After=runlevel3.target
 After=runlevel4.target
 After=runlevel5.target
 [Service]
-EnvironmentFile=<%= @basic[:libhome] %>/env.sh
 ExecStart=/usr/bin/node <%= @basic[:home]+"/"+@package[:package] %>/vnc_monitor.js
 KillMode=process
