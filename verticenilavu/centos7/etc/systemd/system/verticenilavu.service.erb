@@ -3,6 +3,6 @@
         # redis
         # postgres
         cd  /var/www/verticenilavu
-        export MEGAM_HOME=/var/lib/megam
+        export MEGAM_HOME=<%= @basic[:libhome] %>
         export RAILS_ENV=production
         LD_PRELOAD=/usr/lib/libjemalloc.so.1 exec bundle exec config/unicorn_launcher -E production -c config/unicorn.conf.rb
