@@ -17,7 +17,7 @@ mv <%= @basic[:home] %>/<%= @package[:package] %>/<%= @package[:systemd_nsqadmin
 chmod 755 /etc/systemd/system/nsqlookupd.service
 chmod 755 /etc/systemd/system/nsqadmin.service
 
-sed -i 's/lookupd-tcp-address=localhost:4160/lookupd-tcp-address='$ipaddr':4160/g' /etc/systemd/system/<%= @package[:systemd_nsqlookupd_service] %>
+sed -i 's/lookupd-tcp-address=localhost:4160/lookupd-tcp-address='$ipaddr':4160/g' /etc/systemd/system/<%= @package[:systemd_nsqd_service] %>
 sed -i 's/lookupd-http-address=localhost:4161/lookupd-http-address='$ipaddr':4161/g' /etc/systemd/system/<%= @package[:systemd_nsqadmin_service] %>
 
 echo "nsqd not yet started. Try manually 'systemctl start nsqd'"
