@@ -27,4 +27,3 @@ mv ./etc/systemd/system/<%= @package[:package] %>.service ./etc/systemd/system/<
  --rpm-init ./etc/systemd/system/<%= @package[:systemd_service] %> \
  --license "<%= @basic[:license] %>" --vendor "<%= @basic[:vendor] %>" --category "<%= @package[:category] %>" \
  --maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  ./var/www/<%= @package[:package] %>
-

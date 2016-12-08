@@ -204,6 +204,14 @@ chown oneadmin:oneadmin hook_vertice.rb
 
 ```
 
+3. Create `master_key` file into the location  /var/lib/megam
+```
+cat >master_key << EOF
+host = 192.168.0.118:9000  // Point to your Gateway
+masterkey = "3b8eb672aa7c8db82e5d34a0744740b20ed59e1f6814cfb63364040b0994ee3f"
+EOF
+```
+
 ## MegamVerice WHMCS Addon
 
 1. Copy the post_billing_transaction_hook in to directory /var/www/html/whmcs/include/hooks

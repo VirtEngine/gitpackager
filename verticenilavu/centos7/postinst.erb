@@ -2,6 +2,8 @@
 
 mkdir -p <%= @basic[:loghome]+"/"+@package[:package] %>
 
+echo "Take few minutes for install the package"
+
 ## runit preparation
 cd /
 mkdir -p /etc/runit/1.d
@@ -80,6 +82,8 @@ cat > /etc/service/nginx/run <<EOF
         exec /usr/sbin/nginx
 EOF
 chmod 755 /etc/service/nginx/run
+
+ln -s /etc/service/nginx /var/service
 
 gem install bundler
 
