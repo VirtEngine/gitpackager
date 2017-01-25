@@ -1,8 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 
-mkdir -p <%= @basic[:loghome] %>/<%= @package[:package] %>
+mkdir -p <%= @basic[:libhome]+"/"+@package[:package] %>
 
-cd <%= @basic[:home]+"/"+@package[:package] %>
+cd <%= @basic[:libhome]+"/"+@package[:package] %>
+
+wget https://nodejs.org/dist/v6.9.4/node-v6.9.4-linux-x64.tar.xz
+tar xf node-v* && cd node-v*
+
+rm -rf /usr/bin/node
+cp bin/node /usr/bin/node
 
 start verticevnc
 

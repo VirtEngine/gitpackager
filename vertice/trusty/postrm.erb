@@ -1,11 +1,11 @@
 #!/bin/sh
 
 if [ -d "<%= @basic[:home] %>/vertice" ]; then
-  rm -r <%= @basic[:home] %>/<%= @package[:pacakge] %>
+  rm -r <%= @basic[:home] %>/<%= @package[:package] %>
 fi
 
 if [ -d "<%= @basic[:libhome] %>/vertice" ]; then
-  rm -r <%= @basic[:libhome] %>/<%= @package[:pacakge] %>
+  rm -r <%= @basic[:libhome] %>/vertice
 fi
 
 if [ -d "<%= @basic[:loghome] %>/<%= @package[:package] %>" ]; then

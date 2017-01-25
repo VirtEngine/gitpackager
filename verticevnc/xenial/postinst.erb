@@ -4,8 +4,8 @@ mkdir -p <%= @basic[:libhome]+"/"+@package[:package] %>
 
 cd <%= @basic[:libhome]+"/"+@package[:package] %>
 
-wget https://nodejs.org/dist/v0.10.25/node-v0.10.25-linux-x64.tar.gz
-tar xvzf node-v* && cd node-v*
+wget https://nodejs.org/dist/v6.9.4/node-v6.9.4-linux-x64.tar.xz
+tar xf node-v* && cd node-v*
 
 rm -rf /usr/bin/node
 cp bin/node /usr/bin/node

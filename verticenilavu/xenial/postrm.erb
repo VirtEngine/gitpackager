@@ -1,23 +1,42 @@
 #!/bin/sh
 
-[ -d <%= @basic[:loghome]+"/"+@package[:package] %> ] && rm -rf <%= @basic[:loghome]+"/"+@package[:package] %>
+if [ -d <%= @basic[:loghome]+"/"+@package[:package] %> ]; then
+  rm -rf <%= @basic[:loghome]+"/"+@package[:package] %>
+fi
 
-[ -d <%= @basic[:libhome] %>/site_settings.yml ] && rm -rf <%= @basic[:libhome] %>/site_settings.yml
+if [ -d <%= @basic[:libhome] %>/site_settings.yml ]; then
+  rm -rf <%= @basic[:libhome] %>/site_settings.yml
+fi
 
-[ -d <%= @basic[:libhome] %>/nilavu.conf ] && rm -rf <%= @basic[:libhome] %>/nilavu.conf
+if  [ -d <%= @basic[:libhome] %>/nilavu.conf ]; then
+  rm -rf <%= @basic[:libhome] %>/nilavu.conf
+fi
 
-[ -d <%= @basic[:libhome] %>/regions.yml ] && rm -rf <%= @basic[:libhome] %>/regions.yml
+if [ -d <%= @basic[:libhome] %>/regions.yml ]; then
+  rm -rf <%= @basic[:libhome] %>/regions.yml
+fi
 
-[ -d /etc/runit ] && rm -rf /etc/runit
+if [ -d /etc/runit ]; then
+  rm -rf /etc/runit
+fi
 
-[ -d /etc/service/<%= @package[:upstart_service] %> ] && rm -rf /etc/service/<%= @package[:upstart_service] %>
+if [ -d /etc/service/<%= @package[:upstart_service] %> ]; then
+  rm -rf /etc/service/<%= @package[:upstart_service] %>
+fi
 
-[ -d /etc/service/nginx ] && rm -rf /etc/service/nginx
+if [ -d /etc/service/nginx ]; then
+  rm -rf /etc/service/nginx
+fi
 
-[ -d /etc/service/cron ] && rm -rf /etc/service/cron
+if [ -d /etc/service/cron ]; then
+  rm -rf /etc/service/cron
+fi
 
-[ -d /etc/service/rsyslog ] && rm -rf /etc/service/rsyslog
+if [ -d /etc/service/rsyslog ]; then
+  rm -rf /etc/service/rsyslog
+fi
 
-[ -d  /jemalloc] && rm -rf /jemalloc
+if [ -d /var/www/<%= @package[:package] %> ]; then
+  rm -rf /var/www/<%= @package[:package] %>
+fi
 
-[ -d /var/www/<%= @package[:package] %>/base ] && rm -rf /var/www/<%= @package[:package] %>/base

@@ -50,8 +50,9 @@ chmod 755 /var/www/<%= @package[:package] %>/bin/letsencrypt
 cp /var/www/<%= @package[:package] %>/config/nilavu.conf <%= @basic[:libhome] %>/nilavu.conf
 cp /var/www/<%= @package[:package] %>/config/site_settings.yml <%= @basic[:libhome] %>/site_settings.yml
 cp /var/www/<%= @package[:package] %>/config/regions.yml <%= @basic[:libhome] %>/regions.yml
-cp /var/www/<%= @package[:package] %>/config/nginx.conf /etc/nginx/conf.d/
-mv /etc/nginx/conf.d/nginx.conf /etc/nginx/conf.d/nilavu.conf
+sed -i 's/user www-data/#user www-data/g' /etc/nginx/nginx.conf
+cp /var/www/<%= @package[:package] %>/config/nginx.conf /etc/nginx/sites-available/
+mv /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-available/default
 mkdir -p /var/nginx/cache
 
 cat > /etc/runit/3.d/01-nginx <<EOF

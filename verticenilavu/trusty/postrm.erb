@@ -18,6 +18,4 @@
 
 [ -d /etc/service/rsyslog ] && rm -rf /etc/service/rsyslog
 
-[ -d  /jemalloc] && rm -rf /jemalloc
-
-[ -d /var/www/<%= @package[:package] %>/base ] && rm -rf /var/www/<%= @package[:package] %>/base
+[ -d /var/www/<%= @package[:package] %> ] && rm -rf /var/www/<%= @package[:package] %>
