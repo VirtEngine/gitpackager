@@ -1,7 +1,7 @@
 description "<%= @package[:package] %> distributed messaging"
 author "<%= @basic[:maintainer] %>"
 
-# When to start the servicee
+# When to start the service
 start on runlevel [2345]
 start on (started networking)
 start on (local-filesystems)
@@ -9,22 +9,22 @@ start on (local-filesystems)
 # When to stop the service
 stop on runlevel [016]
 stop on (stopping networking)
-stop on (stopped verticevnc)
+stop on (stopped <%= @package[:package] %>)
 
 # Automatically restart process if crashed. Tries 0 times every 60 seconds
 respawn limit 0 60
 
 script
     cd <%= @basic[:home] %>/<%= @package[:package] %>
-    echo "[`date -u +%Y-%m-%dT%T.%3NZ`] (sys) verticevnc starting" >> <%= @basic[:loghome] %>/<%= @package[:package] %>/verticevnc.log
-    exec sudo node vnc_monitor.js >> <%= @basic[:loghome] %>/<%= @package[:package] %>/verticevnc.log 2>&1
+    echo "[`date -u +%Y-%m-%dT%T.%3NZ`] (sys) <%= @package[:package] %> starting" >> <%= @basic[:loghome] %>/<%= @package[:package] %>/<%= @package[:package] %>.log
+    exec sudo node vnc_monitor.js >> <%= @basic[:loghome] %>/<%= @package[:package] %>/<%= @package[:package] %>.log 2>&1
 end script
 
 post-start script
-    PID=`status verticevnc  | egrep -oi '([0-9]+)$' | head -n1`
-    echo $PID > <%=@basic[:runhome] %>/verticevnc.pid
+    PID=`status <%= @package[:package] %> | egrep -oi '([0-9]+)$' | head -n1`
+    echo $PID > <%=@basic[:runhome] %>/<%= @package[:package] %>.pid
 end script
 
 post-stop script
-    rm -f <%=@basic[:runhome] %>/verticevnc.pid
+    rm -f <%=@basic[:runhome] %>/<%= @package[:package] %>.pid
 end script

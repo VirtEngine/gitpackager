@@ -27,7 +27,7 @@ cd ../../../..
 fpm -s dir -t rpm -f --iteration <%= @basic[:iteration] %> -v <%= @basic[:version] %> \
 -n <%= @package[:package] %> -d "<%= @package[:dependencies] %>" \
 --before-install ./preinst --after-install ./postinst  \
---after-remove ./prerm  --after-remove ./postrm  \
+--before-remove ./prerm  --after-remove ./postrm  \
 --rpm-init ./etc/systemd/system/<%= @package[:systemd_service] %> \
 --license "<%= @basic[:license] %>" --vendor "<%= @basic[:vendor] %>" --category "<%= @package[:category] %>" \
 --maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  .<%= @basic[:home]+"/"+@package[:package] %>
