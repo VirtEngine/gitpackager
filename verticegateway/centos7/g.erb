@@ -19,7 +19,7 @@ rm -rf share
 
 cat > VERSION << EOF
 git_version=`git rev-parse HEAD`
-git_branch="1.5"
+git_branch=1.5.1
 EOF
 
 cd ../../../..
@@ -31,4 +31,3 @@ fpm -s dir -t rpm -f --iteration <%= @basic[:iteration] %> -v <%= @basic[:versio
 --rpm-init ./etc/systemd/system/<%= @package[:systemd_service] %> \
 --license "<%= @basic[:license] %>" --vendor "<%= @basic[:vendor] %>" --category "<%= @package[:category] %>" \
 --maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  .<%= @basic[:home]+"/"+@package[:package] %>
-

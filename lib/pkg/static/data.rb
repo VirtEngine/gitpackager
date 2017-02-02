@@ -25,11 +25,11 @@ module Pkg::Data
             category: 'cloud',
 
             deb_dependencies: "#{Pkg::Version::COMMON}, git-core, curl,  rake, zlib1g-dev, build-essential, ruby2.3, ruby2.3-dev, libssl-dev, libreadline-dev, libyaml-dev, libsqlite3-dev, sqlite3, nginx-common, nginx-core, nginx, autoconf, libpcre3, libpcre3-dev,libxml2-dev, libxslt1-dev, libcurl4-openssl-dev,libltdl-dev, libtool, python-software-properties, monit,nodejs, npm, runit,socat,language-pack-en, cron, anacron, psmisc, gawk, parallel,git, wget, rsyslog, whois, wbritish, wamerican",
-            rpm_dependencies: "#{Pkg::Version::COMMON}, virtenginecommon, git-core, curl, epel-release, nginx, openssl-devel, sqlite-devel,  sqlite, autoconf, pcre-devel, pcre,libxml2,libxslt-devel,libtool-ltdl-devel, libtool, monit, nodejs, npm, gcc-c++, libstdc++-devel, socat, anacron, psmisc, gawk, parallel, git, wget, rsyslog, whois, glibc-common, libyaml", 
+            rpm_dependencies: "#{Pkg::Version::COMMON}, virtenginecommon, git-core, curl, epel-release, nginx, openssl-devel, sqlite-devel,  sqlite, autoconf, pcre-devel, pcre,libxml2,libxslt-devel,libtool-ltdl-devel, libtool, monit, nodejs, npm, gcc-c++, libstdc++-devel, socat, anacron, psmisc, gawk, parallel, git, wget, rsyslog, whois, glibc-common, libyaml",
 
             git: 'https://gitlab.com/megamsys/nilavu.git',
           #  git_org:
-            branch: '1.5',
+            branch: '1.5.1',
             #The service name to start
             systemd_service: 'unicorn.service',
             upstart_service: 'unicorn'
@@ -50,7 +50,7 @@ module Pkg::Data
             dependencies: "#{Pkg::Version::COMMON}",
 
             git: 'https://github.com/VirtEngine/gateway',
-            branch: '1.5',
+            branch: '1.5.1',
 
             #The service name to start
             systemd_service: "#{GATEWAY}.service",
@@ -91,7 +91,7 @@ module Pkg::Data
             #git_org is needed as golang uses namespace during compiling
             git: 'https://github.com/megamsys/vertice.git',
             git_org: 'github.com/megamsys',
-            branch: '1.5',
+            branch: '1.5.1',
 
             #The service name to start
             systemd_service: "#{VERTICE}.service",

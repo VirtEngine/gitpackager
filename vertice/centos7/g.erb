@@ -19,7 +19,7 @@ cp <%= @package[:package] %> ../../../../..<%= @basic[:home]+"/"+@package[:packa
 
 cat > VERSION << EOF
 git_version=`git rev-parse HEAD`
-git_branch="1.5"
+git_branch=1.5.1
 EOF
 
 cp VERSION ../../../../..<%= @basic[:home]+"/"+@package[:package] %>

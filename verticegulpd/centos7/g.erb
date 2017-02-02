@@ -17,7 +17,7 @@ cp <%=@package[:package] %> ../../../../..<%= @basic[:home]+"/"+@package[:packag
 
 cat > VERSION << EOF
 git_version=`git rev-parse HEAD`
-git_branch="1.5"
+git_branch=1.5
 EOF
 
 cp VERSION ../../../../../<%= @basic[:home]+"/"+@package[:package] %>
@@ -43,4 +43,3 @@ fpm -s dir -t deb  -f  --iteration <%= @basic[:iteration] %> -v <%= @basic[:vers
 --deb-systemd ./etc/systemd/system/<%= @package[:systemd_service] %> \
 --license "<%= @basic[:license] %>" --vendor "<%= @basic[:vendor] %>" --category "<%= @package[:category] %>" \
 --maintainer "<%= @basic[:maintainer] %>" --url "<%= @basic[:url] %>" --description "<%= @package[:description] %>"  .<%= @basic[:home]+"/"+@package[:package] %>
-
