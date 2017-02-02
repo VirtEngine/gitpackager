@@ -1,16 +1,16 @@
 #!/bin/sh
 
-[ -d /var/log/megam/verticenilavu ] && rm -rf /var/log/megam/verticenilavu
+[ -d <%= @basic[:loghome]+"/"+@package[:package] %>] && rm -rf <%= @basic[:loghome]+"/"+@package[:package] %>
 
-[ -d /var/lib/megam/site_settings.yml ] && rm -rf /var/lib/megam/site_settings.yml
+[ -d <%= @basic[:libhome] %>/nilavu.conf ] && rm -rf <%= @basic[:libhome] %>/nilavu.conf
 
-[ -d /var/lib/megam/nilavu.conf ] && rm -rf /var/lib/megam/nilavu.conf
+[ -d <%= @basic[:libhome] %>/site_settings.yml ] && rm -rf <%= @basic[:libhome] %>/site_settings.yml
 
-[ -d /var/lib/megam/regions.yml ] && rm -rf /var/lib/megam/regions.yml
+[ -d <%= @basic[:libhome] %>/regions.yml ] && rm -rf <%= @basic[:libhome] %>/regions.yml
 
 [ -d /etc/runit ] && rm -rf /etc/runit
 
-[ -d /etc/service/unicorn ] && rm -rf /etc/service/unicorn
+[ -d /etc/service/<%= @package[:upstart_service] %> ] && rm -rf /etc/service/<%= @package[:upstart_service] %>
 
 [ -d /etc/service/nginx ] && rm -rf /etc/service/nginx
 
@@ -18,7 +18,4 @@
 
 [ -d /etc/service/rsyslog ] && rm -rf /etc/service/rsyslog
 
-[ -d  /jemalloc] && rm -rf /jemalloc
-
-[ -d /var/www/verticenilavu/base ] && rm -rf /var/www/verticenilavu/base
-
+[ -d /var/www/<%= @package[:package] %> ] && rm -rf /var/www/<%= @package[:package] %>
