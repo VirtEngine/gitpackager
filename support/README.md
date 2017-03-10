@@ -165,7 +165,7 @@ VM_HOOK = [
  state     = "ACTIVE",
  lcm_state = "SHUTDOWN_POWEROFF",
  command   = "hook_vertice.rb",
- arguments = "$ID $TEMPLATE poweroff stopped" ]
+ arguments = "$ID $TEMPLATE stopped stopped" ]
 
 VM_HOOK = [
  name      = "delete_hook",
