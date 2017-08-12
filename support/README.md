@@ -141,10 +141,10 @@ our cloud agent (gulpd)
 ```bash
 
 # updates the 1.5 version, testing repo
-gulpupd --version 1.5 --branch testing
+gulpupd --version 1.5.2 --branch testing
 
 # updates the 1.5 version, stable repo
-gulpupd --version 1.5 --branch stable
+gulpupd --version 1.5.2 --branch stable
 
 ````
 
