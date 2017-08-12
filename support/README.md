@@ -2,7 +2,7 @@
 
 ## init1.5.sh
 
-The init1.5.sh script helps to update latest version of our cloud agent(`gulpd`) and its configuration(`gulp.conf`) file in the virtual machine images that `MegamVertice` provides auto-magically.
+The init1.5.sh script helps to update latest version of our cloud agent(`gulpd`) and its configuration(`gulp.conf`) file in the virtual machine images that `VirtEngine` provides automatically.
 
 ## To use the init1.5.sh
 
@@ -10,9 +10,9 @@ The init1.5.sh script helps to update latest version of our cloud agent(`gulpd`)
 
 cd /
 
-mkdir vertice
+mkdir virtengine
 
-wget https://raw.githubusercontent.com/megamsys/gitpackager/master/support/init1.5.sh
+wget https://raw.githubusercontent.com/VirtEngine/gitpackager/master/support/init1.5.sh
 
 chmod 755 init1.5.sh
 
@@ -36,7 +36,7 @@ The `init1.5.sh` is preconfigured to assume that the `nsqd` and `scylla` ip addr
     nsqd = ["localhost:4150"]
     scylla = ["localhost"]
     scylla_keyspace = "vertice"
-    scylla_username = "dmVydGFkbWlu"
+    scylla_username = "dmVydGFkbWlu" # do not modify unless you changed user/password for Cassandra.
     scylla_password = "dmVydGFkbWlu"
 
 ```
@@ -84,11 +84,11 @@ true "${branch:=testing}"
 
 Please use the usual process to create a template in OpenNebula and its beyond the scope of this doc.
 
-Make sure that the `Files = "/vertice/init1.5.sh` is configured correctly.
+Make sure that the `Files = "/virtengine/init1.5.sh` is configured correctly.
 
 ```
 CONTEXT = [
- FILES = "/vertice/init1.5.sh",
+ FILES = "/virtengine/init1.5.sh",
  NETWORK = "YES",
  NODE_NAME = "$NAME",
  SET_HOSTNAME = "$NAME",
@@ -150,7 +150,7 @@ gulpupd --version 1.5 --branch stable
 
 ## hook_vertice.rb
 
-hook_vertice.rb triggers MegamVertice when the virtual machine hits the following states.
+hook_vertice.rb triggers VirtEngine when the virtual machine hits the following states.
 
 `delete`, `suspend`, `poweroff`, `boot_suspend`
 
@@ -159,7 +159,7 @@ hook_vertice.rb triggers MegamVertice when the virtual machine hits the followin
 1. In your OpenNebula installation, edit the `/etc/one/oned.conf` with the following
 
 ```
-VM_HOOK = [
+VM_HOOK = 
  name      = "poweroff_hook",
  on        = "CUSTOM",
  state     = "ACTIVE",
@@ -207,12 +207,12 @@ chown oneadmin:oneadmin hook_vertice.rb
 3. Create `master_key` file into the location  /var/lib/megam
 ```
 cat >master_key << EOF
-host = 192.168.0.118:9000  // Point to your Gateway
+host = localhost:9000  // Point to your Gateway (Where VirtEngineGateway package is installed)
 masterkey = "3b8eb672aa7c8db82e5d34a0744740b20ed59e1f6814cfb63364040b0994ee3f"
 EOF
 ```
 
-## MegamVerice WHMCS Addon
+## VirtEngine WHMCS Addon
 
 1. Copy the post_billing_transaction_hook in to directory /var/www/html/whmcs/include/hooks
 
