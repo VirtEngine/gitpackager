@@ -194,7 +194,7 @@ VM_HOOK = [
 
 ```
 
-wget https://raw.githubusercontent.com/megamsys/gitpackager/master/support/hook_vertice.rb
+wget https://raw.githubusercontent.com/VirtEngine/gitpackager/master/support/hook_vertice.rb
 
 cp hook_vertice.rb /var/lib/one/remotes/hooks
 
@@ -207,7 +207,7 @@ chown oneadmin:oneadmin hook_vertice.rb
 3. Create `master_key` file into the location  /var/lib/megam
 ```
 cat >master_key << EOF
-host = localhost:9000  // Point to your Gateway (Where VirtEngineGateway package is installed)
+host = localhost:9000
 masterkey = "3b8eb672aa7c8db82e5d34a0744740b20ed59e1f6814cfb63364040b0994ee3f"
 EOF
 ```
