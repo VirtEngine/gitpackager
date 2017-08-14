@@ -21,7 +21,7 @@ chmod 755 init1.5.sh
 
 ## In the template update nsqd and cassandra ipaddress
 
-The `init1.5.sh` is preconfigured to assume that the `nsqd` and `scylla` ip address are available locally.
+The `init1.5.sh` script must be modified to work with your VirtEngine Installation.
 
 ```
   ### Welcome to the Gulpd configuration file.
@@ -29,15 +29,12 @@ The `init1.5.sh` is preconfigured to assume that the `nsqd` and `scylla` ip addr
   ### [meta]
   ###
   ### Controls the parameters for the Raft consensus group that stores metadata
-  ### about the gulp.
+  ### about gulp.
   ###
   [meta]
     user = "root"
-    nsqd = ["localhost:4150"]
-    scylla = ["localhost"]
-    scylla_keyspace = "vertice"
-    scylla_username = "dmVydGFkbWlu" # do not modify unless you changed user/password for Cassandra.
-    scylla_password = "dmVydGFkbWlu"
+    vertice_api = "http://0.0.0.0:9000/v2" #Change to your public VirtEngine API location
+    nsqd = ["0.0.0.0:4150"] #Change to your public VirtEngine NSQD location
 
 ```
 
