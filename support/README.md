@@ -110,7 +110,7 @@ CONTEXT = [
 
 ```
 
-This template when invoked by vertice, we configure the following parameters automatically to correct behaviour as chosen by the user and in configuration files like `vertice.conf`
+This template when invoked by virtengine, we configure the following parameters automatically to correct behaviour as chosen by the user and in configuration files like `vertice.conf`
 
 ```
 CPU = "0.5"
@@ -195,11 +195,11 @@ cp hook_virtengine.rb /var/lib/one/remotes/hooks
 
 chmod 755 hook_virtengine.rb
 
-chown oneadmin:oneadmin hook_virtengine.rb
+chown oneadmin:oneadmin /var/lib/one/remotes/hooks/hook_virtengine.rb
 
 ```
 
-3. Create `master_key` file into the location  /var/lib/megam
+3. Create `master_key` file into the location  /var/lib/detio
 ```
 cat >master_key << EOF
 host=http://localhost:9000/v2
