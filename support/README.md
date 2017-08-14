@@ -143,13 +143,13 @@ gulpupd --version 1.5.2 --branch stable
 
 ````
 
-## hook_vertice.rb
+## hook_virtengine.rb
 
-hook_vertice.rb triggers VirtEngine when the virtual machine hits the following states.
+hook_virtengine.rb triggers VirtEngine when the virtual machine hits the following states.
 
 `delete`, `suspend`, `poweroff`, `boot_suspend`
 
-## To use the hook_vertice.rb
+## To use the hook_virtengine.rb
 
 1. In your OpenNebula installation, edit the `/etc/one/oned.conf` with the following
 
@@ -159,13 +159,13 @@ VM_HOOK =
  on        = "CUSTOM",
  state     = "ACTIVE",
  lcm_state = "SHUTDOWN_POWEROFF",
- command   = "hook_vertice.rb",
+ command   = "hook_virtengine.rb",
  arguments = "$ID $TEMPLATE poweroff stopped" ]
 
 VM_HOOK = [
  name      = "delete_hook",
  on        = "DONE",
- command   = "hook_vertice.rb",
+ command   = "hook_virtengine.rb",
  arguments = "$ID $TEMPLATE destroyed destroyed" ]
 
 VM_HOOK = [
@@ -173,7 +173,7 @@ VM_HOOK = [
  on        = "CUSTOM",
  state     = "SUSPENDED",
  lcm_state = "LCM_INIT",
- command   = "hook_vertice.rb",
+ command   = "hook_virtengine.rb",
  arguments = "$ID $TEMPLATE suspended suspended" ]
 
 VM_HOOK = [
@@ -181,29 +181,29 @@ VM_HOOK = [
  on        = "CUSTOM",
  state     = "BOOT_SUSPENDED",
  lcm_state = "RUNNING",
- command   = "hook_vertice.rb",
+ command   = "hook_virtengine.rb",
  arguments = "$ID $TEMPLATE running running" ]
 ```
 
-2. Copy the `hook_vertice.rb` file into the location `/var/lib/one/remotes/hooks`
+2. Copy the `hook_virtengine.rb` file into the location `/var/lib/one/remotes/hooks`
 
 ```
 
-wget https://raw.githubusercontent.com/VirtEngine/gitpackager/master/support/hook_vertice.rb
+wget https://raw.githubusercontent.com/VirtEngine/gitpackager/master/support/hook_virtengine.rb
 
-cp hook_vertice.rb /var/lib/one/remotes/hooks
+cp hook_virtengine.rb /var/lib/one/remotes/hooks
 
-chmod 755 hook_vertice.rb
+chmod 755 hook_virtengine.rb
 
-chown oneadmin:oneadmin hook_vertice.rb
+chown oneadmin:oneadmin hook_virtengine.rb
 
 ```
 
 3. Create `master_key` file into the location  /var/lib/megam
 ```
 cat >master_key << EOF
-host = localhost:9000
-masterkey = "3b8eb672aa7c8db82e5d34a0744740b20ed59e1f6814cfb63364040b0994ee3f"
+host=http://localhost:9000/v2
+masterkey=3b8eb672aa7c8db82e5d34a0744740b20ed59e1f6814cfb63364040b0994ee3f
 EOF
 ```
 
@@ -222,8 +222,6 @@ $ sudo service apache2 restart
 ```
 
 2.  Change the script to point to your gateway
-
-3.
 
 ## letsencrypt
 
