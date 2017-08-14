@@ -8,9 +8,9 @@ The init1.5.sh script helps to update latest version of our cloud agent(`gulpd`)
 
 ```bash
 
-cd /
+mkdir /virtengine
 
-mkdir virtengine
+cd /virtengine
 
 wget https://raw.githubusercontent.com/VirtEngine/gitpackager/master/support/init1.5.sh
 
