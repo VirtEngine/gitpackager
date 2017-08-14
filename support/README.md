@@ -38,8 +38,6 @@ The `init1.5.sh` script must be modified to work with your VirtEngine Installati
 
 ```
 
-The scylla_username and scylla_password is `base64` encoded for `vertadmin`
-
 ## Support for RDNS
 
   The RDNS is  the resolution of an IP address to its designated domain name.
