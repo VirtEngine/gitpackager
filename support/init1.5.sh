@@ -2,6 +2,16 @@
 
 dist=`grep PRETTY_NAME /etc/*-release | awk -F '="' '{print $2}'`
 OS=$(echo $dist | awk '{print $1;}')
+OS1=`cut -d' ' -f1 /etc/redhat-release` >> /var/lib/megam/test.log
+
+sudo cat >> //root/.ssh/authorized_keys <<EOF
+$SSH_PUBLIC_KEY
+EOF
+
+case "$OS" in
+  "Fedora")
+     ip route add default via 192.168.0.1
+esac
 
 shopt -s extglob
 set -o errtrace
@@ -165,13 +175,13 @@ parse_params() {
     esac
   done
 
-  true "${version:=1.5}"
+  true "${version:=1.5.1}"
   true "${branch:=testing}"
 
   source_url=$DEFAULT_URL_PREFIX/$branch/$version/gulpd.tar.gz
   source_version=$DEFAULT_URL_PREFIX/$branch/$version/VERSION
 
-  log "⊙▂⊙ Upgrade ${version} -> ${branch}"
+  log "⊙▂⊙ Upgrade ${version} -> ${branch}"  
 }
 
 get_and_compare_version() {
@@ -189,12 +199,12 @@ compare_version() {
     if
       [[ ${_source_version} != ${_current_version} ]]
     then
-      log "●▪● Upgrading ${version} -> ${_source_version}"
+      log "●▪● Upgrading ${version} -> ${_source_version}"  
       return 0
 	  fi
   fi
 
-  log "●▪● Up-to-date. All is well."
+  log "●▪● Up-to-date. All is well."  
 
   return 0
 }
@@ -205,14 +215,14 @@ install_release() {
   _url=$source_url
   _verify_md5="${_url}.md5"
 
-  log "Installing ${_url}"
+  log "Installing ${_url}" 
 
   # rm -r "$gup_tmp_dir" Does curl automatically refresh it ?
   mkdir -p "$gup_tmp_dir"
 
   get_and_unpack "${_url}" "gulpd.tar.gz" "$_verify_md5" && return
 
-  log "●▪● Upgrade. failed."
+  log "●▪● Upgrade. failed."  
   return $?
 }
 
@@ -229,7 +239,7 @@ get_and_unpack() {
   __gup_cd "${gup_dir}" ||
   {
     _return=$?
-    log "Could not change directory '${gup_dir}'."
+    log "Could not change directory '${gup_dir}'."  
     return $_return
   }
 
@@ -238,17 +248,17 @@ get_and_unpack() {
   __gup_cd "${gup_dir}" ||
   {
     _return=$?
-    log "Could not change directory '${gup_dir}'."
+    log "Could not change directory '${gup_dir}'." 
     return $_return
   }
   __gup_debug_command  $gup_tar_command -xzf ${gup_tmp_dir}/${_file} ${gup_tar_options:-}  ||
   {
     rollback_old
     _return=$?
-    log "Could not extract Gulpd sources."
+    log "Could not extract Gulpd sources." 
     return $_return
   }
-  log "●▪● Upgraded. All is well."
+  log "●▪● Upgraded. All is well." 
 
 }
 
@@ -257,7 +267,7 @@ get_package() {
   _url="$1"
   _file="$2"
 
-  log "Downloading ${_url}"
+  log "Downloading ${_url}"  
   __gup_curl -sS ${_url} -o ${gup_tmp_dir}/${_file} ||
   {
     _return=$?
@@ -266,7 +276,7 @@ get_package() {
         log "
 Could not download '${_url}', you can read more about it here:
 To continue in insecure mode run 'echo insecure >> ~/.curlrc'.
-"
+" 
         ;;
       # duplication marker lfdgzkngdkjvnfjknkjvcnbjkncvjxbn
       (77)
@@ -280,13 +290,13 @@ It looks like you have old certificates.
 Curl returned 141 - it is result of a segfault which means it's Curls fault.
 Try again and if it crashes more than a couple of times you either need to
 reinstall Curl or consult with your distribution manual and contact support.
-"
+" 
         ;;
       (*)
         log "
 Could not download '${_url}'.
   curl returned status '$_return'.
-"
+" 
         ;;
     esac
     return $_return
@@ -296,13 +306,13 @@ Could not download '${_url}'.
 verify_md5() {
   [[ -n "${1:-}" ]] ||
   {
-    log "No MD5 url given, skipping."
+    log "No MD5 url given, skipping."  
     return 0
   }
 
   get_package "$1" "$2.md5" ||
   {
-    log "MD5 url given but does not exist: '$1'"
+    log "MD5 url given but does not exist: '$1'"  
     return 0
   }
 
@@ -325,7 +335,7 @@ gup_install_md5_setup() {
   } ||
     gup_md5_command="$( \which md5 2>/dev/null )" ||
     gup_md5_command=""
-    log "Detected MD5 program: '$gup_md5_command'"
+    log "Detected MD5 program: '$gup_md5_command'" 
   [[ -n "$gup_md5_command" ]] || return $?
 }
 
@@ -334,20 +344,20 @@ verify_package_md5() {
   __gup_cd "${gup_tmp_dir}" ||
   {
     _return=$?
-    log "Could not change directory '${gup_tmp_dir}'."
+    log "Could not change directory '${gup_tmp_dir}'." 
     return $_return
   }
 
   if
     "${gup_md5_command}" -c "$2"
   then
-    log "MD5 verified '$1'"
+    log "MD5 verified '$1'" 
   else
     typeset _ret=$?
     log "\
 MD5 hash verification failed for '$1' - '$3'!
 try running the script again.
-"
+" 
     exit $_ret
   fi
 }
@@ -372,11 +382,11 @@ archive_current() {
         mv "$gup" "$gup_archive_dir"
     fi
   done
-  log "Archived."
+  log "Archived." 
 }
 
 rollback_old() {
-log "Rolling..."
+log "Rolling..." 
 }
 
 # Searches the VERSION for the highest available version matching a branch
@@ -433,6 +443,7 @@ __gup_curl_output_control() {
     [[ " $*" == *" -s"* || " $*" == *" --silent"* ]]
   then
     # make sure --show-error is used with --silent
+
     [[ " $*" == *" -S"* || " $*" == *" -sS"* || " $*" == *" --show-error"* ]] ||
     {
       __flags+=( "--show-error" "-v" )
@@ -492,10 +503,11 @@ vertsbegin() {
   install_release
 }
 
-vertsbegin "$@"
+vertsbegin "$@" 
 
-if [ "$OS" = "Red Hat" ]  || [ "$OS" = "Ubuntu" ] || [ "$OS" = "Debian" ] || [ "$OS" = "CentOS" ] || [ "$OS" = "Fedora" ]
+if [ "$OS" = "Red Hat" ]  || [ "$OS" = "Ubuntu" ] || [ "$OS" = "Debian" ] || [ "$OS" = "CentOS" ] || [ "$OS1" = "CentOS" ] || [ "$OS" = "Fedora" ]
 then
+echo $OS  >> /var/lib/megam/test.log
 CONF='//var/lib/megam/gulp/gulpd.conf'
 else
   CONF='//var/lib/megam/verticegulpd/conf/gulpd.conf'
@@ -512,13 +524,12 @@ cat >$CONF  <<'EOF'
 
   [meta]
     user = "root"
-    nsqd = ["localhost:4150"]
-    scylla = ["localhost"]
-    scylla_keyspace = "vertice"
-    scylla_username = "dmVydGFkbWlu"
-    scylla_password = "dmVydGFkbWlu"
-    name_gulp = "solutions.megambox.com"
-    account_id = "testings@megam.io"
+    vertice_api = "http://localhost:9000/v2" #Change to VirtEngine API Location
+    nsqd = ["localhost:4150"] #Change to VirtEngine NSQD Location
+		   
+    name_gulp = "solutions.det.io"
+    api_key = "abcdefghijklmnopqrstuvwxyz.,"
+    account_id = "temporary@det.io"
     assembly_id = "ASM6054404599503290163"
     assemblies_id = "AMS4797637690447572801"
 
@@ -530,10 +541,10 @@ cat >$CONF  <<'EOF'
 
   [gulpd]
     enabled = true
-    provider = "chefsolo"
-    cookbook = "megam_run"
-    chefrepo = "https://github.com/megamsys/chef-repo.git"
-    chefrepo_tarball = "https://github.com/megamsys/chef-repo/archive/0.96.tar.gz"
+    provider = "gru"
+		
+    gru = "https://github.com/virtengine/gru.git"
+    gru_tarball = "https://github.com/virtengine/gru/archive/0.1.tar.gz"
 
   ###
   ### [http]
@@ -548,10 +559,24 @@ cat >$CONF  <<'EOF'
 
 EOF
 
+				
 sed -i "s/^[ \t]*name_gulp.*/    name = \"$NODE_NAME\"/" $CONF
+sed -i "s/^[ \t]*api_key.*/    api_key = \"$API_KEY\"/" $CONF
 sed -i "s/^[ \t]*assemblies_id.*/    assemblies_id = \"$ASSEMBLIES_ID\"/" $CONF
 sed -i "s/^[ \t]*assembly_id.*/    assembly_id = \"$ASSEMBLY_ID\"/" $CONF
 sed -i "s/^[ \t]*account_id.*/    account_id = \"$ACCOUNTS_ID\"/" $CONF
+
+case "$OS1" in
+   "CentOS")
+        yum install -y glib*
+	echo "----------------------" >> /var/lib/megam/test.log
+        sudo service verticegulpd start  >>/var/lib/megam/test.log
+        sudo service cgconfig start >>/var/lib/megam/test.log
+        sudo service cadvisor start  >>/var/lib/megam/test.log
+	echo "----------------------" >> /var/lib/megam/test.log
+          ;;
+esac
+
 
 case "$OS" in
    "Ubuntu")
@@ -560,7 +585,8 @@ v=$(echo $dist | awk -F '"' '{print $1;}')
 
   case "$v" in
          "14.04")
-         stop verticegulpd  >/dev/null 2>&1 || echo "already stopped" >>/var/lib/megam/test
+         stop verticegulpd  >/dev/null 2>&1 || echo "already stopped" >>/var/lib/megam/test 
+         echo "trying to start verticegulpd" >>/var/lib/megam/test 
          start verticegulpd
           ;;
          "16.04")
@@ -571,6 +597,7 @@ v=$(echo $dist | awk -F '"' '{print $1;}')
          ;;
   esac
 HOSTNAME=`hostname`
+echo $HOSTNAME
 
 sudo cat >> //etc/hosts <<EOF
 127.0.0.1  `hostname` localhost
@@ -584,7 +611,7 @@ systemctl stop cadvisor.service
 systemctl start cadvisor.service
    ;;
    "Fedora")
-ip route add default via 192.168.0.1
+		 
 sudo systemctl stop verticegulpd.service >> /var/lib/megam/test
 sudo systemctl start verticegulpd.service >> /var/lib/megam/test
 sudo systemctl stop cadvisor.service  >> /var/lib/megam/test
@@ -626,9 +653,9 @@ Gateway=$ETH0_GATEWAY
 DNS=8.8.8.8
 DNS=8.8.4.4
 
-[Address]
-Address=$ETH0_IP/27
-Peer=$ETH0_GATEWAY
+   
+	   
+	  
 
 EOF
 
@@ -639,5 +666,5 @@ systemctl start verticegulpd.service
 systemctl stop cadvisor.service
 systemctl start cadvisor.service
 ip route add default via 192.168.0.1
-   ;;
+;;
 esac
