@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir -p -- "/var/lib/megam"
 
 dist=`grep PRETTY_NAME /etc/*-release | awk -F '="' '{print $2}'`
 OS=$(echo $dist | awk '{print $1;}')
@@ -18,7 +19,7 @@ set -o errtrace
 set -o errexit
 
 ## -- default variables
-DEFAULT_URL_PREFIX="https://s3.amazonaws.com/vertice"
+DEFAULT_URL_PREFIX="https://virtenginepub.blob.core.windows.net/gulpd"
 
 gup_dir="/usr/share/megam/verticegulpd"
 
@@ -106,7 +107,7 @@ usage() {
   echo "  --help"
   echo
   echo "For more information, see:"
-  echo "  http://docs.megam.io"
+  echo "  http://docs.virtengine.com"
 
 }
 
@@ -178,8 +179,8 @@ parse_params() {
   true "${version:=1.5.1}"
   true "${branch:=testing}"
 
-  source_url=$DEFAULT_URL_PREFIX/$branch/$version/gulpd.tar.gz
-  source_version=$DEFAULT_URL_PREFIX/$branch/$version/VERSION
+  source_url=$DEFAULT_URL_PREFIX/gulpd.tar.gz
+  source_version=$DEFAULT_URL_PREFIX/VERSION
 
   log "⊙▂⊙ Upgrade ${version} -> ${branch}"  
 }
@@ -524,8 +525,8 @@ cat >$CONF  <<'EOF'
 
   [meta]
     user = "root"
-    vertice_api = "http://localhost:9000/v2" #Change to VirtEngine API Location
-    nsqd = ["localhost:4150"] #Change to VirtEngine NSQD Location
+    vertice_api = "http://<YOUR_IP>:9000/v2" #Change to VirtEngine API Location
+    nsqd = ["<YOUR_IP>:4150"] #Change to VirtEngine NSQD Location
 		   
     name_gulp = "solutions.det.io"
     api_key = "abcdefghijklmnopqrstuvwxyz.,"
@@ -554,8 +555,8 @@ cat >$CONF  <<'EOF'
   ###
 
   [http]
-    enabled = false
-    bind_address = "127.0.0.1:6666"
+    enabled = true
+    bind_address = "0.0.0.0:6666"
 
 EOF
 
@@ -653,18 +654,12 @@ Gateway=$ETH0_GATEWAY
 DNS=8.8.8.8
 DNS=8.8.4.4
 
-   
-	   
-	  
-
 EOF
 
 sudo systemctl restart systemd-networkd
-
 systemctl stop verticegulpd.service
 systemctl start verticegulpd.service
 systemctl stop cadvisor.service
 systemctl start cadvisor.service
-ip route add default via 192.168.0.1
 ;;
 esac
