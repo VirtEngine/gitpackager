@@ -1,8 +1,8 @@
 # Support scripts
 
-## init1.5.sh
+## init.sh
 
-The init1.5.sh script helps to update latest version of our cloud agent(`gulpd`) and its configuration(`gulp.conf`) file in the virtual machine images that `VirtEngine` provides automatically.
+The init.sh script helps to update latest version of our cloud agent(`gulpd`) and its configuration(`gulp.conf`) file in the virtual machine images that `VirtEngine` provides automatically.
 
 ## To use the init1.5.sh
 
@@ -12,16 +12,16 @@ mkdir /virtengine
 
 cd /virtengine
 
-wget https://raw.githubusercontent.com/VirtEngine/gitpackager/master/support/init1.5.sh
+wget https://raw.githubusercontent.com/VirtEngine/gitpackager/master/support/init.sh
 
-chmod 755 init1.5.sh
+chmod 755 init.sh
 
 
 ```
 
 ## In the template update nsqd and cassandra ipaddress
 
-The `init1.5.sh` script must be modified to work with your VirtEngine Installation.
+The `init.sh` script must be modified to work with your VirtEngine Installation.
 
 ```
   ### Welcome to the Gulpd configuration file.
@@ -60,7 +60,7 @@ Resolving an IP address uses the pointer DNS record type (PTR record)
 
 ## In the template update gulpupd to use the correct repo
 
-The `init1.5.sh` is preconfigured to assume you are running `testing` and `1.5` version of repository.
+The `init.sh` is preconfigured to assume you are running `testing` and `1.5` version of repository.
 
 You can search and change the below lines.
 
@@ -79,21 +79,21 @@ true "${branch:=testing}"
 
 Please use the usual process to create a template in OpenNebula and its beyond the scope of this doc.
 
-Make sure that the `Files = "/virtengine/init1.5.sh` is configured correctly.
+Make sure that the `Files = "/virtengine/init.sh` is configured correctly.
 
 ```
 CONTEXT = [
- FILES = "/virtengine/init1.5.sh",
+ FILES = "/virtengine/init.sh",
  NETWORK = "YES",
  NODE_NAME = "$NAME",
  SET_HOSTNAME = "$NAME",
  SSH_PUBLIC_KEY = " " ]
  CPU = "0.5"
  CPU_COST = "5"
- NAME = "megam"
+ NAME = "virtengine"
  DESCRIPTION = "common template for all images"
  DISK = [
- IMAGE = "megam",
+ IMAGE = "",
  IMAGE_UNAME = "oneadmin" ]
  GRAPHICS = [
  LISTEN = "0.0.0.0",
@@ -114,9 +114,9 @@ This template when invoked by virtengine, we configure the following parameters 
 
 ```
 CPU = "0.5"
-NAME = "megam"
+NAME = "virtengine"
 DISK = [
- IMAGE = "megam"]
+ IMAGE = ""]
 MEMORY = "1024"
 NIC = [
  NETWORK = "ipv4-pri",
@@ -128,7 +128,7 @@ The `init1.5.sh` will be executed when ever the  virtual machine boots.
 
 ### internally we use, gulpupd
 
-This script is bundled into `init1.5.sh` as OpenNebula wants the script to be in-line and loads the full script as base64 into its memory. Hence the below copy is already there for you in `init1.5.sh`
+This script is bundled into `init.sh` as OpenNebula wants the script to be in-line and loads the full script as base64 into its memory. Hence the below copy is already there for you in `init.sh`
 
 The gulpupd script helps customers to keep the shipped images Up-to-date with the latest version of
 our cloud agent (gulpd)
@@ -180,6 +180,15 @@ VM_HOOK = [
  name      = "boot_suspend_hook",
  on        = "CUSTOM",
  state     = "BOOT_SUSPENDED",
+ lcm_state = "RUNNING",
+ command   = "hook_virtengine.rb",
+ arguments = "$ID $TEMPLATE running running" ]
+ 
+ 
+VM_HOOK = [
+ name      = "running_hook",
+ on        = "CUSTOM",
+ state     = "ACTIVE",
  lcm_state = "RUNNING",
  command   = "hook_virtengine.rb",
  arguments = "$ID $TEMPLATE running running" ]
